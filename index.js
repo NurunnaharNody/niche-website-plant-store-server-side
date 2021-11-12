@@ -19,6 +19,7 @@ async function run(){
         const database = client.db('plantstore');
         const servicesCollection = database.collection('services');
         const usersCollection = database.collection('users');
+        const reviewsCollection = database.collection('reviews');
 
 
            
@@ -35,6 +36,14 @@ async function run(){
             const users = await cursor.toArray();
             res.send(users);
         })
+
+        //Get API for Reviews
+        app.get('/reviews', async(req, res) =>{
+            const cursor = reviewsCollection.find({});
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+        })
+
 
         //Get single services
 
@@ -74,6 +83,17 @@ async function run(){
             const result = await usersCollection.insertOne(user);
             res.json(result)
         })
+
+        //POST API for reviews
+        app.post('/reviews', async(req, res) =>{
+            const review = req.body;
+           console.log('hit the post', review)
+            const result = await reviewsCollection.insertOne(review);
+            res.json(result)
+        })
+
+
+
          //PUT API for admin
         app.put('/users/admin', async(req,res) =>{
             const user = req.body;
