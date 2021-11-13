@@ -24,28 +24,28 @@ async function run(){
 
 
            
-        //Get API
+        //Get method for service
         app.get('/services', async(req, res) =>{
             const cursor = servicesCollection.find({});
             const services = await cursor.toArray();
             res.send(services);
         })
 
-        //Get API for users
+        //Get method for users
         app.get('/users', async(req, res) =>{
             const cursor = usersCollection.find({});
             const users = await cursor.toArray();
             res.send(users);
         })
 
-        //Get API for Reviews
+        //Get method for Reviews
         app.get('/reviews', async(req, res) =>{
             const cursor = reviewsCollection.find({});
             const reviews = await cursor.toArray();
             res.send(reviews);
         })
 
-         //Get API for orders
+         //Get method for orders
          app.get('/orders', async(req, res) =>{
             const cursor = ordersCollection.find({});
             const orders = await cursor.toArray();
@@ -62,7 +62,7 @@ async function run(){
             res.json(service)
         })
 
-        //POST API for services
+        //post method for services
         app.post('/services', async(req, res) =>{
             const service = req.body;
            console.log('hit the post', service)
@@ -84,7 +84,7 @@ async function run(){
         })
 
 
-        //POST API for users
+        //post method for users
         app.post('/users', async(req, res) =>{
             const user = req.body;
            console.log('hit the post', user)
@@ -92,7 +92,7 @@ async function run(){
             res.json(result)
         })
 
-        //POST API for reviews
+        //post method for reviews
         app.post('/reviews', async(req, res) =>{
             const review = req.body;
            console.log('hit the post', review)
@@ -100,7 +100,7 @@ async function run(){
             res.json(result)
         })
 
-         //POST API for orders
+         //post method for orders
          app.post('/orders', async(req, res) =>{
             const order = req.body;
            console.log('hit the post', order)
@@ -110,7 +110,7 @@ async function run(){
 
 
 
-         //PUT API for admin
+         //put method for admin
         app.put('/users/admin', async(req,res) =>{
             const user = req.body;
             const filter = {email: user.email};
@@ -121,11 +121,19 @@ async function run(){
 
 
 
-        //Delete API
+        //delete method for service
         app.delete('/services/:id', async(req, res) =>{
             const id = req.params.id;
             const query = {_id:ObjectId(id)};
             const result = await servicesCollection.deleteOne(query);
+            res.json(result);
+        })
+
+          //delete method for order
+          app.delete('/orders/:id', async(req, res) =>{
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)};
+            const result = await ordersCollection.deleteOne(query);
             res.json(result);
         })
 
