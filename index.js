@@ -84,6 +84,14 @@ async function run(){
         })
 
 
+        app.get('/orders/:email', async(req, res) =>{
+            const email = req.params.email;
+            const query = {email: email};
+            const orderer = await ordersCollection.find(query);
+            res.json(orderer);
+        })
+
+
         //post method for users
         app.post('/users', async(req, res) =>{
             const user = req.body;
