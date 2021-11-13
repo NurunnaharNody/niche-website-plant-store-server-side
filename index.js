@@ -20,6 +20,7 @@ async function run(){
         const servicesCollection = database.collection('services');
         const usersCollection = database.collection('users');
         const reviewsCollection = database.collection('reviews');
+        const ordersCollection = database.collection('orders');
 
 
            
@@ -42,6 +43,13 @@ async function run(){
             const cursor = reviewsCollection.find({});
             const reviews = await cursor.toArray();
             res.send(reviews);
+        })
+
+         //Get API for orders
+         app.get('/orders', async(req, res) =>{
+            const cursor = ordersCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders);
         })
 
 
@@ -89,6 +97,14 @@ async function run(){
             const review = req.body;
            console.log('hit the post', review)
             const result = await reviewsCollection.insertOne(review);
+            res.json(result)
+        })
+
+         //POST API for orders
+         app.post('/orders', async(req, res) =>{
+            const order = req.body;
+           console.log('hit the post', order)
+            const result = await ordersCollection.insertOne(order);
             res.json(result)
         })
 
